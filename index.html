@@ -1,50 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8">
     <title>Reto: Llevando la realidad a una experiencia VR</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-template-component@3.x.x/dist/aframe-template-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-layout-component@5.x.x/dist/aframe-layout-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-event-set-component@5.x.x/dist/aframe-event-set-component.min.js"></script>
-    <script
-        src="https://unpkg.com/aframe-proxy-event-component@2.1.0/dist/aframe-proxy-event-component.min.jss"></script>
-
+    <script src="dist/aframe-v1.5.0.min.js"></script>
+    <script>
+      AFRAME.registerComponent('scene-switcher', {
+        schema: {
+          images: {type: 'array', default: ['R0010058_20260113091917.JPG', 'R0010059_20260113092114.JPG', 'R0010060_20260113092226.JPG', 'R0010063_20260113092456.JPG', 'R0010065_20260113092942.JPG', 'R0010066_20260113093038.JPG', 'R0010067_20260113093143.JPG', 'R0010068_20260113093327.JPG']}
+        },
+        init: function () {
+          this.currentIndex = 0; // Inicializa el índice de la imagen actual
+          this.el.addEventListener('abuttondown', this.switchScene.bind(this));
+        },
+        switchScene: function () {
+          this.currentIndex = (this.currentIndex + 1) % this.data.images.length; // Calcula el siguiente índice de forma cíclica
+          var sky = document.querySelector('a-sky'); // Encuentra el elemento a-sky
+          sky.setAttribute('src', this.data.images[this.currentIndex]); // Cambia la imagen del fondo
+        }
+      });
+    </script>
 </head>
-
 <body>
     <a-scene>
-        <a-assets>
-            <audio id="click-sound" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
+        <!-- Define los controles de Oculus y agrega el componente de cambio de escena -->
+        <a-entity oculus-touch-controls="hand: right" scene-switcher></a-entity>
 
-            <!-- Images. -->
-            <img id="city" src="./R0010058_20260113091917.JPG">
-            <img id="city-thumb" src="./R0010059_20260113092114.JPG">
-            <img id="cubes" src="./R0010060_20260113092226.JPG">
-            <img id="cubes-thumb" src="./R0010063_20260113092456.JPG">
-            <img id="sechelt" src="./R0010065_20260113092942.JPG">
-            <img id="sechelt-thumb" src="./R0010066_20260113093038.JPG">
-        </a-assets>
-
-        <!-- 360-degree image. -->
-        <a-sky id="image-360" radius="10" src="#city"></a-sky>
-
-        <!-- Link template we will build. -->
-        <a-entity class="link"></a-entity>
-
-        <!-- Camera + Cursor. -->
-        <a-camera>
-            <a-cursor id="cursor"
-                animation__click="property: scale; from: 0.1 0.1 0.1; to: 1 1 1; easing: easeInCubic; dur: 150; startEvents: click"
-                animation__clickreset="property: scale; to: 0.1 0.1 0.1; dur: 1; startEvents: animationcomplete__click"
-                animation__fusing="property: scale; from: 1 1 1; to: 0.1 0.1 0.1; easing: easeInCubic; dur: 150; startEvents: fusing"></a-cursor>
-        </a-camera>
+        <!-- Define el elemento del cielo con una imagen inicial -->
+        <a-sky src="escena-1.png"></a-sky>
     </a-scene>
-
 </body>
-
 </html>
