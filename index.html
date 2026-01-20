@@ -4,9 +4,13 @@
     <meta charset="utf-8">
     <title>Reto: Llevando la realidad a una experiencia VR</title>
     <script src="dist/aframe-v1.5.0.min.js"></script>
+    <script src="aframe-master.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@f322d237cb6be356661a2334dfdf7459da6885c4/dist/aframe-master.min.js"></script>
+    
+
     <script>
       AFRAME.registerComponent('scene-switcher', {
-        schema: {
+          schema: {
           images: {type: 'array', default: ['R0010058_20260113091917.JPG', 'R0010059_20260113092114.JPG', 'R0010060_20260113092226.JPG', 'R0010063_20260113092456.JPG', 'R0010065_20260113092942.JPG', 'R0010066_20260113093038.JPG', 'R0010067_20260113093143.JPG', 'R0010068_20260113093327.JPG']}
         },
         init: function () {
@@ -27,7 +31,7 @@
         <a-entity oculus-touch-controls="hand: right" scene-switcher></a-entity>
 
         <!-- Define el elemento del cielo con una imagen inicial -->
-        <a-sky src="escena-1.png"></a-sky>
+        <a-sky src="R0010058_20260113091917.JPG"></a-sky>
     </a-scene>
 </body>
 </html>
